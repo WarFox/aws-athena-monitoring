@@ -8,5 +8,5 @@
 
 (defn -main
   [& args]
-  (println "CDK Example with Clojure")
+  (println "AWS Athena Monitoring")
   (synth))

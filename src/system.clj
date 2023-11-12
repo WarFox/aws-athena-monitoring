@@ -1,31 +1,29 @@
 (ns system
   (:require
    [integrant.core :as ig]
-   [stacks.topic :as topic])
+   [stacks.athena-monitor :as athena-monitor])
   (:import
    [software.amazon.awscdk App]))
 
-(def config
-  {:app/instance {}
-   :topic/stack  {:app (ig/ref :app/instance)
-                  :id  "TopicStack"}
-   :app/synth    {:app    (ig/ref :app/instance)
-                  :stacks [(ig/ref :topic/stack)]}})
+(defn config
+  [app]
+  {::athena-monitor {:app app}
+   ::synth    {:app    app
+               :stacks [(ig/ref ::athena-monitor)]}})
 
-(defmethod ig/init-key :app/instance
+(defmethod ig/init-key ::app
   [_ _]
   (App.))
 
-(defmethod ig/init-key :app/synth
+(defmethod ig/init-key ::synth
   [_ {:keys [app]}]
   (.synth app))
 
-(defmethod ig/init-key :topic/stack
-  [_ {:keys [app stack-id]}]
-  (topic/stack app stack-id))
+(defmethod ig/init-key ::athena-monitor
+  [_ {:keys [app]}]
+  (athena-monitor/stack app))
 
 (defn init
   "Initialise system"
   []
-  (println "Initialising system")
-  (ig/init config))
+  (ig/init (config (App.))))
