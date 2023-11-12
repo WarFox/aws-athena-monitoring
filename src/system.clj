@@ -8,8 +8,8 @@
 (defn config
   [app]
   {::athena-monitor {:app app}
-   ::synth    {:app    app
-               :stacks [(ig/ref ::athena-monitor)]}})
+   ::synth          {:app app
+                     :stacks [(ig/ref ::athena-monitor)]}})
 
 (defmethod ig/init-key ::app
   [_ _]
