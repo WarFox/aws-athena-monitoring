@@ -1,6 +1,6 @@
 (ns cdk.cloudwatch
   (:import
-   [software.amazon.awscdk.services.cloudwatch Metric$Builder Dashboard$Builder GraphWidget$Builder]))
+   [software.amazon.awscdk.services.cloudwatch Metric$Builder MathExpression$Builder Dashboard$Builder GraphWidget$Builder]))
 
 (defn metric
   [{:keys [namespace metricName metric-name dimensions]}]
@@ -17,4 +17,11 @@
       (.left left)
       (.right right)
       (.view view)
+      (.build)))
+
+(defn math-expression
+  [{:keys [expression label]}]
+  (-> (MathExpression$Builder/create)
+      (.expression expression)
+      (.label label)
       (.build)))
