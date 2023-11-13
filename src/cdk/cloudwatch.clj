@@ -1,5 +1,6 @@
 (ns cdk.cloudwatch
   (:import
+   [java.util Collections]
    [software.amazon.awscdk.services.cloudwatch Metric$Builder MathExpression$Builder Dashboard$Builder GraphWidget$Builder]))
 
 (defn metric
@@ -24,4 +25,11 @@
   (-> (MathExpression$Builder/create)
       (.expression expression)
       (.label label)
+      (.build)))
+
+(defn dashboard
+  [stack id {:keys [dashboard-name widgets]}]
+  (-> (Dashboard$Builder/create stack id)
+      (.dashboardName dashboard-name)
+      (.widgets (Collections/singletonList widgets))
       (.build)))
