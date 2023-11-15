@@ -4,7 +4,8 @@
    [software.amazon.awscdk.services.cloudwatch GraphWidgetView])
   (:require
    [cdk.cloudwatch :as cw]
-   [integrant.core :as ig]))
+   [integrant.core :as ig]
+   [constructs.query-stats :as query-stats]))
 
 (defn config
   "Integrant config for athena-monitor"
@@ -86,5 +87,6 @@
   (let [stack (Stack. parent "athena-monitor")]
 
     (ig/init (config stack))
+    (query-stats/construct stack)
       ;; return stack
     stack))
