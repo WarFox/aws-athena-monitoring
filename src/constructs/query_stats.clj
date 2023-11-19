@@ -48,7 +48,7 @@
                                   :owner "Deepu"})})
       (.addDependency database)))
 
-(defn component
+(defn construct
   [stack]
   (println "Athena Query Stats")
   (ig/init (config stack)))
